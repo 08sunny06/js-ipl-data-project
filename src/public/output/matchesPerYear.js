@@ -1,7 +1,7 @@
 import fsc from "fs"
-import * as funcData from "../../server/matches-per-year.js"
+import * as funcData from "/home/shounak/js-ipl-data-project/src/server/matches-per-year.js"
 
-let data = fsc.readFileSync("../../data/matches.json")
+let data = fsc.readFileSync("/home/shounak/js-ipl-data-project/src/data/matches.json")
 let match = JSON.parse(data)
 
 let res = funcData.extractTotalMatches(match)
