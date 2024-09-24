@@ -1,29 +1,29 @@
 
-function topEconomy(arr1, arr2){
-  let reqData = []
-  for(let ele of arr1){
-    if(ele.season == 2015){
-      for(let ele1 of arr2){
-       if(ele.id == ele1.match_id)
-         reqData.push(ele1)
+function topEconomy(matches_ar, deliveries_ar){
+  let deliveries_delivered_in_2015 = []
+  for(let matches_data of matches_ar){
+    if(matches_data.season == 2015){
+      for(let deliveries_data of deliveries_ar){
+       if(matches_data.id == deliveries_data.match_id)
+         deliveries_delivered_in_2015.push(deliveries_data)
       }
     }
   }
-  let runConced = 0; let data = {}; let balls = 0
-  for(let ele of reqData){
-    runConced = parseInt(ele.total_runs) -[parseInt(ele.penalty_runs) + parseInt(ele.legbye_runs) + parseInt(ele.bye_runs)]
-    if(!(ele.bowler in data))
-      data[ele.bowler] = {"runsConced": runConced, "balls": parseInt(ele.ball)}
+  let runConced = 0; let required_deliveries_data = {}; let balls = 0
+  for(let deliveries_data of deliveries_delivered_in_2015){
+    runConced = parseInt(deliveries_data.total_runs) -[parseInt(deliveries_data.penalty_runs) + parseInt(deliveries_data.legbye_runs) + parseInt(deliveries_data.bye_runs)]
+    if(!(deliveries_data.bowler in required_deliveries_data))
+      required_deliveries_data[deliveries_data.bowler] = {"runsConced": runConced, "balls": parseInt(deliveries_data.ball)}
     else{
-      data[ele.bowler].runsConced += runConced
-      data[ele.bowler].balls += parseInt(ele.ball)
+      required_deliveries_data[deliveries_data.bowler].runsConced += runConced
+      required_deliveries_data[deliveries_data.bowler].balls += parseInt(deliveries_data.ball)
     }
   }
   let newData = [];let ecoTop = []
-  for(let ele in data){
-   data[ele].balls= parseInt(data[ele].balls/6)
-   let eco = (data[ele].runsConced/data[ele].balls)
-   newData.push([ele,eco.toFixed(3)])
+  for(let required_deliveries in required_deliveries_data){
+   required_deliveries_data[required_deliveries].balls= parseInt(required_deliveries_data[required_deliveries].balls/6)
+   let eco = (required_deliveries_data[required_deliveries].runsConced/required_deliveries_data[required_deliveries].balls)
+   newData.push([required_deliveries,eco.toFixed(3)])
   }
   newData.sort((a,b)=>a[1]-b[1])
   for(let i=0; i<10; i++)
