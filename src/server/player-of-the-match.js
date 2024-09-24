@@ -1,20 +1,20 @@
 
-function manOfMatch(arr){
- let man = {};let res = {}
- for(let ele of arr){
-  if(!(ele.season in man))
-   man[ele.season] = {}
-  if(!(ele.player_of_match in man[ele.season]))
-   man[ele.season][ele["player_of_match"]] = 1
+function manOfMatch(matches_ar){
+ let year = {};let res = {}
+ for(let matches_data of matches_ar){
+  if(!(matches_data.season in year))
+   year[matches_data.season] = {}
+  if(!(matches_data.player_of_match in year[matches_data.season]))
+   year[matches_data.season][matches_data["player_of_match"]] = 1
   else
-   man[ele.season][ele.player_of_match]++
+   year[matches_data.season][matches_data.player_of_match]++
  }
- for(let ele in man){
+ for(let year_data in year){
   let cou = 0
-  for(let ele1 in man[ele]){
-   if(cou<man[ele][ele1]){
-    res[ele] = ele1
-    cou = man[ele][ele1]
+  for(let batsman_data in year[year_data]){
+   if(cou<year[year_data][batsman_data]){
+    res[year_data] = batsman_data
+    cou = year[year_data][batsman_data]
    }
   }
  }
