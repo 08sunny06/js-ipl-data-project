@@ -1,14 +1,14 @@
 
-function winCount(ar){
+function winCount(matches_ar){
 let tot = {}
-for(let ele of ar){
-  if(!(ele.season in tot))
-    tot[ele.season] = {}
-  if(ele.winner!= ""){
-    if(!(ele.winner in tot[ele.season]))
-      tot[ele.season][ele.winner] = 1
+for(let matches_data of matches_ar){
+  if(!(matches_data.season in tot))
+    tot[matches_data.season] = {}
+  if(matches_data.winner!= ""){
+    if(!(matches_data.winner in tot[matches_data.season]))
+      tot[matches_data.season][matches_data.winner] = 1
     else
-      tot[ele.season][ele.winner]++
+      tot[matches_data.season][matches_data.winner]++
   }    
 }
 return tot
