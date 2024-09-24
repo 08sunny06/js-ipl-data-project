@@ -1,14 +1,14 @@
 
 
-function extractTotalMatches(arr){
-let tot = {}
-for(let ele of arr){
-   if(!(ele.season in tot))
-     tot[ele.season] = 1
+function extractTotalMatches(matches_ar){
+let answer = {}
+for(let matches_data of matches_ar){
+   if(!(matches_data.season in answer))
+     answer[matches_data.season] = 1
    else
-     tot[ele.season]++
+     answer[matches_data.season]++
 }
-return tot
+return answer
 }
 
 export {extractTotalMatches}
