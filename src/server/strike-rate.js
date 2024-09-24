@@ -1,37 +1,37 @@
 
-function strikeRate(arr1, arr2){
-let sea = {}; let res = {}
-for(let ele of arr2){  
-  if(!(ele.season in sea))
-    sea[ele.season] = []
-  if(sea[ele.season].indexOf(ele.id)==-1)
-    sea[ele.season].push(ele.id)
+function strikeRate(deliveries_ar, matches_ar){
+let year = {}; let answer = {}
+for(let matches_data of matches_ar){  
+  if(!(matches_data.season in year))
+    year[matches_data.season] = []
+  if(year[matches_data.season].indexOf(matches_data.id)==-1)
+    year[matches_data.season].push(matches_data.id)
  }
 
-for(let ele1 of arr1){
-  for(let ele in sea){
-   if(!(ele in res))
-    res[ele] = {}
-   if(sea[ele].indexOf(ele1.match_id)!==-1){
-     if(!(ele1.batsman in res[ele]))
-      res[ele][ele1.batsman] = {runs: 0, balls: 0, strikeRat: 0}
-      res[ele][ele1.batsman].runs += parseInt(ele1.batsman_runs)
-     if(ele1.wide_runs==0){
-       if(ele1.noball_runs==0)
-      res[ele][ele1.batsman].balls++
+for(let deliveries_data of deliveries_ar){
+  for(let year_data in year){
+   if(!(year_data in answer))
+    answer[year_data] = {}
+   if(year[year_data].indexOf(deliveries_data.match_id)!==-1){
+     if(!(deliveries_data.batsman in answer[year_data]))
+      answer[year_data][deliveries_data.batsman] = {runs: 0, balls: 0, strikeRat: 0}
+      answer[year_data][deliveries_data.batsman].runs += parseInt(deliveries_data.batsman_runs)
+     if(deliveries_data.wide_runs==0){
+       if(deliveries_data.noball_runs==0)
+      answer[year_data][deliveries_data.batsman].balls++
       }
     }
   }
 }
-for(let ele in res){
-  for(let ele1 in res[ele]){
-    if(res[ele][ele1].balls>0){
-      let strikeRat = (res[ele][ele1].runs/res[ele][ele1].balls*100).toFixed(3)
-     res[ele][ele1] = strikeRat
+for(let year_data in answer){
+  for(let batsman_data in answer[year_data]){
+    if(answer[year_data][batsman_data].balls>0){
+      let strikeRat = (answer[year_data][batsman_data].runs/answer[year_data][batsman_data].balls*100).toFixed(3)
+     answer[year_data][batsman_data] = strikeRat
     }
    }
 }
-return res
+return answer
 }
 
 export {strikeRate}
