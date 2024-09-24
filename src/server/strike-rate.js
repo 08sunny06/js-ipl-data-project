@@ -25,8 +25,10 @@ for(let ele1 of arr1){
 }
 for(let ele in res){
   for(let ele1 in res[ele]){
-    if(res[ele][ele1].balls>0)
-     res[ele][ele1].strikeRat = res[ele][ele1].runs/res[ele][ele1].balls*100
+    if(res[ele][ele1].balls>0){
+      let strikeRat = (res[ele][ele1].runs/res[ele][ele1].balls*100).toFixed(3)
+     res[ele][ele1] = strikeRat
+    }
    }
 }
 return res
