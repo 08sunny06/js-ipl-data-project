@@ -1,15 +1,22 @@
 {
-  "name": "js-drill-shounak",
+  "name": "defective-js-ipl-data-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "persons.js",
+  "description": "My first javascript project on IPL",
   "type": "module",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/08sunny06/js-ipl-data-project.git"
+  },
+  "author": "SHOUNAK MANDAL",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/08sunny06/js-ipl-data-project/issues"
+  },
+  "homepage": "https://github.com/08sunny06/js-ipl-data-project#readme",
   "dependencies": {
     "csvtojson": "^2.0.10"
   }
