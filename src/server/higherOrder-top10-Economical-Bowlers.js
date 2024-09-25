@@ -1,39 +1,33 @@
-import file from "fs"
-let data1 = file.readFileSync("/home/shounak/js-ipl-data-project/src/data/matches.json")
-let data2 = file.readFileSync("/home/shounak/js-ipl-data-project/src/data/deliveries.json")
 
-let match = JSON.parse(data1)
-let deliv = JSON.parse(data2)
-
-function economicalBowl(arr1, arr2){
-    let reqData = arr1.reduce(function(tot,cur){
-        if(cur.season==2015)
-            tot.push(cur.id);
+function economicalBowl(matches_ar, deliveries_ar){
+    let match_2015_id = matches_ar.reduce(function(tot,cur_match_id){
+        if(cur_match_id.season==2015)
+            tot.push(cur_match_id.id);
         return tot
         },[])
-    let filterData = arr2.reduce((tur,cur) => {
-        if(reqData.indexOf(cur.match_id)>-1)
-            tur.push(cur)
+    let delivery_2015_data = deliveries_ar.reduce((tur,cur_delivery_data) => {
+        if(match_2015_id.indexOf(cur_delivery_data.match_id)>-1)
+            tur.push(cur_delivery_data)
         return tur
     },[])
     
-    let ecoBowl = filterData.reduce((acc,cur) => {
-        let {bowler, ball, bye_runs: bye, legbye_runs: lgbye, penalty_runs: penal, total_runs: tot} = cur;
+    let eco_bowler_data = delivery_2015_data.reduce((acc,cur) => {
+        let {bowler, ball, bye_runs, legbye_runs, penalty_runs, total_runs} = cur;
         if(!(bowler in acc))
             acc[bowler] = {economyRate: 0, ball: 0}
-        acc[bowler]["economyRate"] += parseInt(tot) -(parseInt(bye) + parseInt(lgbye) + parseInt(penal))        
+        acc[bowler]["economyRate"] += parseInt(total_runs) -(parseInt(bye_runs) + parseInt(legbye_runs) + parseInt(penalty_runs))        
         acc[bowler]["ball"]++
         return acc
     },{})
-    let bowler = Object.keys(ecoBowl);
-    let data = Object.values(ecoBowl).reduce((tot, cur, ind) => {
-        cur.ball /= 6
-        cur.economyRate /= cur.ball
-        tot.push([bowler[ind],cur.economyRate.toFixed(2)])
+    let bowler = Object.keys(eco_bowler_data);
+    let bowler_data = Object.values(eco_bowler_data).reduce((tot, cur_bowler_data, ind) => {
+        cur_bowler_data.ball /= 6
+        cur_bowler_data.economyRate /= cur_bowler_data.ball
+        tot.push([bowler[ind],cur_bowler_data.economyRate.toFixed(2)])
         return tot 
     },[])
-    data = data.sort((a,b) => a[1]-b[1]).filter((item,ind) => {if(ind<10)return item})
-    return data
+    bowler_data = bowler_data.sort((a,b) => a[1]-b[1]).filter((item,ind) => {if(ind<10)return item})
+    return bowler_data
 }
 
-console.log(economicalBowl(match, deliv))
+export {economicalBowl}
