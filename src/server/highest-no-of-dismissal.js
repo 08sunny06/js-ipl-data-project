@@ -1,42 +1,42 @@
 
-function dismissalHighNumber(arr){
-let bowl = {};
-for(let ele of arr){ 
- if(!(ele.bowler in bowl))
-   bowl[ele.bowler] = {} 
- if(ele.player_dismissed!==""){
-  if(ele.dismissal_kind!=="" || ele.dismissal_kind!=="run out" || ele.dismissal_kind!=="retired hurt" || ele.dismissal_kind!=="obstructing the field"){
-   if(!(ele.player_dismissed in bowl[ele.bowler]))
-    bowl[ele.bowler][ele.player_dismissed] = 1
+function dismissalHighNumber(deliveries_ar){
+let bowler_req_data = {};
+for(let data_deliveries of deliveries_ar){ 
+ if(!(data_deliveries.bowler in bowler_req_data))
+   bowler_req_data[data_deliveries.bowler] = {} 
+ if(data_deliveries.player_dismissed!==""){
+  if(data_deliveries.dismissal_kind!=="" || data_deliveries.dismissal_kind!=="run out" || data_deliveries.dismissal_kind!=="retired hurt" || data_deliveries.dismissal_kind!=="obstructing the field"){
+   if(!(data_deliveries.player_dismissed in bowler_req_data[data_deliveries.bowler]))
+    bowler_req_data[data_deliveries.bowler][data_deliveries.player_dismissed] = 1
    else
-    bowl[ele.bowler][ele.player_dismissed]++
+    bowler_req_data[data_deliveries.bowler][data_deliveries.player_dismissed]++
   }
  }
 }
-let temp = {}; let res = []; let check1 = 0
-for(let ele in bowl){
- if(!(ele in temp))
-  temp[ele] = {}
+let updated_bowler_data = {}; let result = []; let check1 = 0
+for(let bowler in bowler_req_data){
+ if(!(bowler in updated_bowler_data))
+  updated_bowler_data[bowler] = {}
  let check = 0;
- for(let ele1 in bowl[ele]){
-  if(check<bowl[ele][ele1]){
+ for(let batsman in bowler_req_data[bowler]){
+  if(check<bowler_req_data[bowler][batsman]){
    let obj = {}
-   check = bowl[ele][ele1]
-   obj[ele1] = check
-   temp[ele] = obj
+   check = bowler_req_data[bowler][batsman]
+   obj[batsman] = check
+   updated_bowler_data[bowler] = obj
   }
  }
- for(let ele1 in temp[ele]){
-  if(check1<=temp[ele][ele1]){
+ for(let batsman in updated_bowler_data[bowler]){
+  if(check1<=updated_bowler_data[bowler][batsman]){
    let obj = {};
-   check1 = temp[ele][ele1]
-   obj[ele] = {}
-   obj[ele][ele1] = check
-   res = obj
+   check1 = updated_bowler_data[bowler][batsman]
+   obj[bowler] = {}
+   obj[bowler][batsman] = check
+   result = obj
   }
  }
 }
-return res
+return result
 }
 
 
