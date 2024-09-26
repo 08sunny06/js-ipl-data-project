@@ -3,26 +3,32 @@ import file from "fs"
 let data = file.readFileSync("/home/shounak/js-ipl-data-project/src/data/matches.json")
 let data1 = file.readFileSync("/home/shounak/js-ipl-data-project/src/data/deliveries.json")
 
-let match = JSON.parse(data)
-let deliv = JSON.parse(data1)
+let matches = JSON.parse(data)
+let deliveries = JSON.parse(data1)
 
-function runsConceded(arr1, arr2){
-    let ar = arr1.reduce((tot,cur) => {if(cur["season"]==2016)tot.push(cur['id']); return tot}, [])
+function runsConceded(matches_ar, deliveries_ar) {
+    try {
+        let match_id_2016 = matches_ar.reduce((tot, match_data) => { if (match_data["season"] == 2016) tot.push(match_data['id']); return tot }, [])
 
-    let ar1 = arr2.reduce((tot,cur) => {
-        let {match_id: id} = cur        
-        if(ar.indexOf(id)>-1){            
-            tot.push(cur)}
-        return tot
-    },[])
-    let ans = ar1.reduce((tot,cur) => {
-        let {extra_runs: extra, bowling_team: bowTe} = cur
-        if(!(bowTe in tot))      
-            tot[bowTe] = 0
-        tot[bowTe] += parseInt(extra)
-        return tot
-    }, {})
-    return ans
+        let delivery_data_2016 = deliveries_ar.reduce((tot, deliveries_data) => {
+            let { match_id } = deliveries_data
+            if (match_id_2016.indexOf(match_id) > -1) {
+                tot.push(deliveries_data)
+            }
+            return tot
+        }, [])
+        let answer = delivery_data_2016.reduce((tot, current_2016_delivery_data) => {
+            let { extra_runs, bowling_team } = current_2016_delivery_data
+            if (!(bowling_team in tot))
+                tot[bowling_team] = 0
+            tot[bowling_team] += parseInt(extra_runs)
+            return tot
+        }, {})
+        return answer
+    }
+    catch (error) {
+        console.log(error)
+    }
 }
 
-console.log(runsConceded(match,deliv))
+console.log(runsConceded(matches, deliveries))

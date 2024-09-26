@@ -1,7 +1,7 @@
 import fil from 'fs'
 
 let data1 = fil.readFileSync("/home/shounak/js-ipl-data-project/src/data/deliveries.json")
-let deliv = JSON.parse(data1)
+let deliveries_Ar = JSON.parse(data1)
 
 
 function dismissalNumbers(arr){
@@ -19,21 +19,31 @@ function dismissalNumbers(arr){
         }
         return acc
     },{})
-    let key = Object.keys(dismissed)
-    let value = Object.values(dismissed)
-    let max = value.reduce((acc, cur, ind) => {
-        acc[key[ind]] = maxObj(cur)
-        
-        return acc
-    },{})
-    let key1 = Object.keys(max)
-    let value1 = Object.values(max)
-    let ma = value1.reduce((tot,cur,ind) => {
-        
-    },)
-    return max
+    // console.log(Object.entries(dismissed))
+
+     let res = Object.entries(dismissed).map(([bowler,batsman])=>{
+        let ans = Object.entries(batsman).reduce((tot,[batsman,value])=>{
+            if(tot[1]<value){
+                tot[1] = value
+                tot[0] = batsman
+            }
+            return tot
+        },["", 0])
+        return [bowler,Object.fromEntries([ans])]
+     },[])
+     let res2 = res.reduce((tot,[bowler,values])=>{
+        let batsmn = Object.keys(values)
+        if(tot[0][1]["count"]<values[batsmn]){
+            tot[0][0] = bowler
+            tot[0][1]["name"] = (batsmn).toString()
+            tot[0][1]["count"] = values[batsmn]
+        }
+        return tot
+     },[["",{"name":"","count":0}]])
+     return (Object.fromEntries(res2))
+
 }
- console.log(dismissalNumbers(deliv))
+ console.log(dismissalNumbers(deliveries_Ar))
 
 
 // let obj = {a:2, b:4, c:4}

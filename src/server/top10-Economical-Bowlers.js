@@ -1,5 +1,6 @@
 
 function topEconomy(matches_ar, deliveries_ar){
+  try{
   let deliveries_delivered_in_2015 = []
   for(let matches_data of matches_ar){
     if(matches_data.season == 2015){
@@ -29,6 +30,10 @@ function topEconomy(matches_ar, deliveries_ar){
   for(let i=0; i<10; i++)
    ecoTop.push(newData[i][0],newData[i][1])
   return ecoTop
+  }
+  catch(error){
+    console.log(error)
+  }
 }
 
 export{topEconomy}
